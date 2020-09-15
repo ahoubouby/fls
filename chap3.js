@@ -42,3 +42,10 @@ bar(spreadArgs(foo));
 console.log(sum);
 
 [1, 2, 3, 4].map(partial(add, 3)).forEach((el) => console.log(el));
+
+function foo2(x, y, z, ...rest) {
+  console.log(x, y, z, rest);
+}
+
+const f = partialRight(foo2, "z:last");
+f(1, 2); // 1, 2, "z:last" []
