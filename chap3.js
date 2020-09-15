@@ -121,5 +121,5 @@ const when = (predicate, fn) => (...args) =>
   predicate(...args) ? fn(...args) : undefined;
 
 const outPut = (txt) => console.log("printed from output ", txt);
-var printf = uncurry(partialRight(when, outPut));
-printf(isLongEngough, "abdelwahed");
+const printf = uncurry(partialRight(when, outPut));
+printf(isLongEngough, "isLonghEngouhString");
