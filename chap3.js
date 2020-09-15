@@ -109,7 +109,7 @@ function named({ x, y, z } = {}) {
 // f1({ y: 2 })({ x: 1 })({ z: 3 });
 // f2({ z: 3, x: 1 })({ y: 3333 });
 
-// technique to implment point-free style
+//  point-free style in JS
 
 const not = (predicate) => (...args) => !predicate(...args);
 
@@ -120,6 +120,7 @@ const isLongEngough = not(isShortEnough);
 const when = (predicate, fn) => (...args) =>
   predicate(...args) ? fn(...args) : undefined;
 
-const outPut = (txt) => console.log("printed from output ", txt);
-const printf = uncurry(partialRight(when, outPut));
-printf(isLongEngough, "isLonghEngouhString");
+const outPut = (txt) => console.log("printed from output function ", txt);
+const printf = curry(partialRight(when, outPut))(isLongEngough);
+
+printf("isLonghEngouhString");
