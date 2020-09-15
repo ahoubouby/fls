@@ -42,6 +42,14 @@ const curry = (fn, arity = fn.length, nextCurried) =>
     else return nextCurried(args);
   })([]);
 
+const uncurry = (fn) => (...args) => {
+  var ret = fn;
+  for (let arg of args) {
+    ret = ret(arg);
+  }
+  return ret;
+};
+
 function foo(x, y) {
   console.log("x + y = ", x + y);
 }
