@@ -6,7 +6,7 @@ const partial = (fn, ...presetArgs) => (...laterArgs) =>
   fn(...presetArgs, ...laterArgs);
 const reverseArgs = (fn) => (...args) => fn(...args.reverse());
 const partialRight = (fn, presetArgs) => (...laterArgs) =>
-  fn(...laterArgs, ...presetArgs);
+  fn(...laterArgs, presetArgs);
 
 const add = (x, y) => x + y;
 const add2 = (x) => (y) => x + y;
@@ -87,3 +87,39 @@ const curriedFun1 = curry(fun1);
 
 const result = [1, 2, 3, 4, 5].map(curry(add)(3));
 log(result);
+
+// tip to acheive named parmaeters
+
+const partialProps = (fn, arity = 1, nextCurried) =>
+  (nextCurried = (prevArgsObj) => (nextArgObj = {}) => {
+    const [key] = Object.keys(nextArgObj);
+    console.log(prevArgsObj);
+    // console.log(nextArgObj);
+    var allArgsObj = Object.assign({}, prevArgsObj, { [key]: nextArgObj[key] });
+    console.log(allArgsObj);
+    if (Object.keys(allArgsObj).length >= arity) return fn(allArgsObj);
+    return nextCurried(allArgsObj);
+  })({});
+
+function named({ x, y, z } = {}) {
+  console.log(`x:${x} y:${y} z:${z}`);
+}
+// var f1 = partialProps(named, 3);
+// var f2 = partialProps(named, 2);
+// f1({ y: 2 })({ x: 1 })({ z: 3 });
+// f2({ z: 3, x: 1 })({ y: 3333 });
+
+// technique to implment point-free style
+
+const not = (predicate) => (...args) => !predicate(...args);
+
+const isShortEnough = (str) => str.length <= 5;
+
+const isLongEngough = not(isShortEnough);
+
+const when = (predicate, fn) => (...args) =>
+  predicate(...args) ? fn(...args) : undefined;
+
+const outPut = (txt) => console.log("printed from output ", txt);
+var printf = uncurry(partialRight(when, outPut));
+printf(isLongEngough, "abdelwahed");
