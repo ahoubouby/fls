@@ -28,9 +28,16 @@ const filterWords = words.filter(identity);
 // for interview question
 const spreadArgs = (fn) => (args) => fn(...args);
 
-const curry = (fn, arity = fn.length, nextCurried) =>
+const stricCurry = (fn, arity = fn.length, nextCurried) =>
   (nextCurried = (prevArgs) => (nextArg) => {
     const args = [...prevArgs, nextArg];
+    if (args.length >= arity) return fn(...args);
+    else return nextCurried(args);
+  })([]);
+
+const curry = (fn, arity = fn.length, nextCurried) =>
+  (nextCurried = (prevArgs) => (...nextArg) => {
+    const args = [...prevArgs, ...nextArg];
     if (args.length >= arity) return fn(...args);
     else return nextCurried(args);
   })([]);
