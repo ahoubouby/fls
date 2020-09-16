@@ -11,6 +11,11 @@ const text =
 // utility function
 const compose2 = (fn2, fn1) => (orignValue) => fn2(fn1(orignValue));
 
+const composes = (...fns) => (x) => fns.reduceRight((y, f) => f(y), x);
+
+//------ compose
+
+const skipShortWords = (words) => words.filter((word) => word.length > 4);
 // --------------------------
 
 const words = (str) =>
@@ -26,6 +31,8 @@ const unique = (list) => {
   }, []);
 };
 
+// --------------------------
+
 const wordsFound = words(text);
 const wordsUsed = unique(wordsFound);
 
@@ -37,16 +44,6 @@ const chars = letters("How are you Henry?");
 const chars2 = letters2("How are you Henry?");
 printOutputCode(chars);
 printOutputCode(chars2);
-
-//------ compose
-
-const composes = (...fns) => (x) => fns.reduceRight((y, f) => f(y), x);
-
-function skipShortWords(words) {
-  return words.filter((word) => word.length > 4);
-}
-
-// -----
 
 const letters3 = composes(unique, words);
 const chars3 = letters3("How are you Henry?");
