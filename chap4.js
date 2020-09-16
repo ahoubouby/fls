@@ -4,7 +4,10 @@ const printOutputCode = (codeReturn) => {
   console.log(codeReturn);
   console.log(separator);
 };
+//
 
+const text =
+  "To compose two functions together, pass the  output of the first function call as the input of the  second function call.";
 // utility function
 const compose2 = (fn2, fn1) => (orignValue) => fn2(fn1(orignValue));
 
@@ -34,8 +37,6 @@ const unique2 = (list) => {
   }, []);
 };
 
-const text =
-  "To compose two functions together, pass the  output of the first function call as the input of the  second function call.";
 const wordsFound = words(text);
 const wordsUsed = unique(wordsFound);
 const wordsUsed2 = unique2(wordsFound);
@@ -53,7 +54,16 @@ printOutputCode(chars2);
 
 const composes = (...fns) => (x) => fns.reduceRight((y, f) => f(y), x);
 
+function skipShortWords(words) {
+  return words.filter((word) => word.length > 4);
+}
+
+// -----
+
 const letters3 = composes(unique, words);
 const chars3 = letters3("How are you Henry?");
 console.log("char3");
 printOutputCode(chars3);
+const letters4 = composes(skipShortWords, unique, words);
+const chars4 = letters4(text);
+printOutputCode(chars4);
