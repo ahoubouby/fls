@@ -5,6 +5,11 @@ const printOutputCode = (codeReturn) => {
   console.log(separator);
 };
 
+// utility function
+const compose2 = (fn2, fn1) => (orignValue) => fn2(fn1(orignValue));
+
+// --------------------------
+
 const words = (str) =>
   String(str)
     .toLowerCase()
