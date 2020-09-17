@@ -105,5 +105,7 @@ function shorterWords(text) {
 //declarative
 const shortWordFromPredefinedFunc = partialRight(wordsFilter, not(shortWord));
 const shorterWordsDec = composes(shortWordFromPredefinedFunc, unique, words);
+const shorterWordsPipe = pipe(words, unique, shortWordFromPredefinedFunc);
 
 printOutputCode(shorterWordsDec(text));
+printOutputCode(shorterWordsPipe(text));
