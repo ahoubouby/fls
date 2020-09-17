@@ -1,12 +1,13 @@
 const separator = "-------------------------------------------------";
-
+const unary = (fn) => (arg) => fn(arg);
 const printOutputCode = (codeReturn) => {
   console.log(separator);
   console.log(codeReturn);
   console.log(separator);
 };
 //
-
+const partialRight = (fn, presetArgs) => (...laterArgs) =>
+  fn(...laterArgs, presetArgs);
 const partial = (fn, ...presetArgs) => (...laterArgs) =>
   fn(...presetArgs, ...laterArgs);
 
@@ -21,7 +22,11 @@ const pipe = (...fns) => (x) => fns.reduce((y, f) => f(y), x);
 
 //------ compose
 
-const skipShortWords = (words) => words.filter((word) => word.length > 4);
+const shortWord = (word) => word.length > 4;
+const skipShortWords = (words) => words.filter(unary(shortWord));
+
+const wordsFilter = (words, predicate) => words.filter(unary(predicate));
+const not = (predice) => (...args) => !predice(...args);
 // --------------------------
 
 const words = (str) =>
@@ -88,3 +93,17 @@ const isPropUnd = (val, obj, prop) => und(obj[prop]);
 const saveComment2 = (txt) => {
   storeData(comments, comments.length, txt, notEmpty);
 };
+
+// ----- Separation Enables Focus ----- //
+
+// Composition as Abstraction
+// imerative example
+function shorterWords(text) {
+  return wordsFilter(text, not(shortWord));
+}
+
+//declarative
+const shortWordFromPredefinedFunc = partialRight(wordsFilter, not(shortWord));
+const shorterWordsDec = composes(shortWordFromPredefinedFunc, unique, words);
+
+printOutputCode(shorterWordsDec(text));
