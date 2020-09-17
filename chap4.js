@@ -66,8 +66,10 @@ function storeData(store, location, value) {
   store[location] = value;
 }
 
-const saveComment = (txt, event) => {
-  storeData(comments, comments.length, txt);
+const saveComment = (txt) => {
+  if (txt != "") {
+    storeData(comments, comments.length, txt);
+  }
 };
 
 function trackEvent(evt) {
@@ -75,3 +77,14 @@ function trackEvent(evt) {
     storeData(events, evt.name, evt);
   }
 }
+//--- abstraction good approche
+
+function conditionallyStoreData(store, location, value, checkFn) {
+  if (checkFn(value, store, location)) sotre[location] = value;
+}
+const und = (x) => x === undefined;
+const notEmpty = (x) => x != "";
+const isPropUnd = (val, obj, prop) => und(obj[prop]);
+const saveComment2 = (txt) => {
+  storeData(comments, comments.length, txt, notEmpty);
+};
