@@ -109,3 +109,14 @@ const shorterWordsPipe = pipe(words, unique, shortWordFromPredefinedFunc);
 
 printOutputCode(shorterWordsDec(text));
 printOutputCode(shorterWordsPipe(text));
+
+// --- Revisiting Points
+
+const prop = (name, obj) => obj[name];
+
+const extractName = partial(prop, "name");
+
+const getPerson = () => ({ name: "abdelwahed" });
+
+const outPutPerson = composes(extractName, getPerson);
+printOutputCode(outPutPerson());
