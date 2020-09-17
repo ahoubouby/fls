@@ -60,3 +60,18 @@ printOutputCode(chars3);
 const letter5 = pipe(words, unique, skipShortWords);
 const chars5 = letter5("how are you you you henry henry ?");
 printOutputCode(chars5);
+
+//------- abstraction
+function storeData(store, location, value) {
+  store[location] = value;
+}
+
+const saveComment = (txt, event) => {
+  storeData(comments, comments.length, txt);
+};
+
+function trackEvent(evt) {
+  if (evt.name !== undefined) {
+    storeData(events, evt.name, evt);
+  }
+}
