@@ -15,3 +15,11 @@ function currency(val) {
 
 console.log(currency(-3.1));
 console.log(currency(currency(-3.1)));
+//-- pure funciton
+
+const sum = (items) => items.reduce((acc, cv) => acc + cv, 0);
+const unary = (fn) => (arg) => fn(arg);
+const table = [1, 2, 4, 7, 11, 16, 22];
+console.log(sum(table) / table.length);
+
+//Purely Relative
